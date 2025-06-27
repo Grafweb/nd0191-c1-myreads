@@ -164,6 +164,11 @@ body,
   cursor: pointer;
 }
 
+select,
+::picker(select) {
+  appearance: base-select;
+}
+
 /* book cover */
 
 .book-cover {
