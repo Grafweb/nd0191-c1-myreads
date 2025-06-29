@@ -12,6 +12,7 @@ export default function SearchBooks({
 
   //state Search
   const [booksSearch, setBooksSearch] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   //it checks book includes in state book shelfs
   const includeBook = (bookSearch) =>
@@ -35,6 +36,7 @@ export default function SearchBooks({
 
   //handle Search
   const handleSearch = async (value) => {
+    setLoading(true);
     try {
       const result = await BookAPI.search(value, maxResults).then((books) => {
         if (books && books.length > 0) {
@@ -50,6 +52,7 @@ export default function SearchBooks({
           return books;
         }
       });
+      setLoading(false);
       setBooksSearch(result);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -74,7 +77,9 @@ export default function SearchBooks({
       </div>
       <div className="search-books-results">
         <ol className="books-grid">
-          {booksSearch && booksSearch.length > 0 ? (
+          {loading ? (
+            <li>Loading...!</li>
+          ) : booksSearch && booksSearch.length > 0 ? (
             booksSearch.map((book) => (
               <Book key={book.id} book={book} handleShelf={handleShelf} />
             ))

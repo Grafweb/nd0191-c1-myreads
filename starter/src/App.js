@@ -31,8 +31,17 @@ function App() {
   ];
 
   //update book on shelf
-  const updateBook = (bookShelf, shelf) =>
-    Object.assign({}, bookShelf, { shelf: shelf });
+  const updateBook = (bookShelf, shelf) => {
+    const noneShelfName = 'none';
+    const proportiesShelf = 'shelf';
+    if (shelf !== noneShelfName) {
+      return Object.assign({}, bookShelf, { shelf: shelf });
+    } else {
+      delete bookShelf[proportiesShelf];
+      console.log(bookShelf);
+      return bookShelf;
+    }
+  };
 
   //fetch books form API
   async function fetchApiBook() {
